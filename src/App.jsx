@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 import { Sidebar, Navbar } from './components';
-import { Bought, ArtworkDetails, UploadArtwork, Home, Sold} from './pages';
+import { Bought, ArtworkDetails, UploadArtwork, Home, Sold, AuctionDetails} from './pages';
 import Uploaded from './pages/Uploaded';
 import AuctionPlace from './pages/AuctionPlace';
 
@@ -24,6 +24,7 @@ const App = () => {
           <Route path="/auction" element={<AuctionPlace />} />
           <Route path="/uploadArtwork" element={<UploadArtwork />} />
           <Route path="/artwork-details/:id" element={<ArtworkDetails />} />
+          <Route path="/auction-details/:id" element={<AuctionDetails />} />
         </Routes>
       </div>
     </div>

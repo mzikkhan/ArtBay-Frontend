@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-
 import { useStateContext } from '../context';
 import { CustomButton } from './';
 import { logo, menu, search, thirdweb } from '../assets';
@@ -17,28 +16,36 @@ const Navbar = () => {
   return (
     <div className="flex md:flex-row flex-col-reverse justify-between mb-[35px] gap-6">
       <div className="lg:flex-1 flex flex-row items-center">
-        <h1 className="font-epilogue font-normal text-[14px] text-white">{pageTitle}</h1>
+      <h1 className="font-epilogue font-semibold text-[24px] text-white">{pageTitle}</h1>
       </div>
 
       <div className="sm:flex hidden flex-row justify-end gap-4">
-        <CustomButton 
-          btnType="button"
-          title={address ? 'Upload Artwork' : 'Connect'}
-          styles={address ? 'bg-[#1dc071]' : 'bg-[#8c6dfd]'}
-          handleClick={() => {
-            if(address) navigate('create-campaign')
-            else connect()
-          }}
-        />
+        {address && (
+          <CustomButton 
+            btnType="button"
+            title="Wallet Connected"
+            styles="bg-[#1dc071]"
+            handleClick
+          />
+        )}
+        
+        {!address && (
+          <CustomButton 
+            btnType="button"
+            title="Connect"
+            styles="bg-[#8c6dfd]"
+            handleClick={connect}
+          />
+        )}
 
-        <Link to="/profile">
+        {/* <Link to="/profile">
           <div className="w-[52px] h-[52px] rounded-full bg-[#2c2f32] flex justify-center items-center cursor-pointer">
-            <img src={thirdweb} alt="user" className="w-[60%] h-[60%] object-contain" />
+            <img src='./src/triskelion.svg' alt="user" className="w-[60%] h-[60%] object-contain" />
           </div>
-        </Link>
+        </Link> */}
       </div>
 
-      {/* Small screen navigation */}
+      {/* Small screen navigation
       <div className="sm:hidden flex justify-between items-center relative">
         <div className="w-[40px] h-[40px] rounded-[10px] bg-[#2c2f32] flex justify-center items-center cursor-pointer">
           <img src={logo} alt="user" className="w-[60%] h-[60%] object-contain" />
@@ -87,8 +94,8 @@ const Navbar = () => {
             />
           </div>
         </div>
-      </div>
-    </div>
+      </div>*/}
+    </div> 
   );
 };
 

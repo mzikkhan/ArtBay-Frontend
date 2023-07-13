@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 
 import { DisplayCampaigns } from '../components';
 import { useStateContext } from '../context'
+import DisplayAuction from '../components/DisplayAuction';
 
 const AuctionPlace = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -21,7 +22,7 @@ const AuctionPlace = () => {
   }, [address, contract]);
 
   return (
-    <DisplayCampaigns 
+    <DisplayAuction 
       title="Auction"
       isLoading={isLoading}
       campaigns={campaigns}
