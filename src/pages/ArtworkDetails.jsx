@@ -7,7 +7,7 @@ import { CountBox, CustomButton, Loader } from '../components';
 import { calculateBarPercentage, daysLeft } from '../utils';
 import { thirdweb } from '../assets';
 
-const CampaignDetails = () => {
+const ArtworkDetails = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
   const { donate, getDonations, contract, address } = useStateContext();
@@ -105,14 +105,18 @@ const CampaignDetails = () => {
               Buy the ArtWork
             </p>
             <div className="mt-[30px]">
-              <input
+              {/* <input
                 type="number"
-                placeholder="ETH 0.1"
-                step="0.01"
+                placeholder="ETH 0.5"
                 className="w-full py-[10px] sm:px-[20px] px-[15px] outline-none border-[1px] border-[#3a3a43] bg-transparent font-epilogue text-white text-[18px] leading-[30px] placeholder:text-[#4b5264] rounded-[10px]"
-                value={amount}
                 onChange={(e) => setAmount(e.target.value)}
-              />
+                readOnly
+              /> */}
+
+              <div className="my-[20px] p-4 bg-[#13131a] rounded-[10px]">
+                <h4 className="font-epilogue font-semibold text-[14px] leading-[22px] text-white">ETH 0.5</h4>
+              </div>
+
 
               <div className="my-[20px] p-4 bg-[#13131a] rounded-[10px]">
                 <h4 className="font-epilogue font-semibold text-[14px] leading-[22px] text-white">Love the artwork?</h4>
@@ -129,8 +133,8 @@ const CampaignDetails = () => {
           </div>
         </div>
       </div>
-    </div>
+    </div >
   )
 }
 
-export default CampaignDetails
+export default ArtworkDetails
