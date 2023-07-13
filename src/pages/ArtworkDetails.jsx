@@ -10,7 +10,7 @@ import { thirdweb } from '../assets';
 const ArtworkDetails = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
-  const { donate, getDonations, contract, address } = useStateContext();
+  const { buy, getDonations, contract, address } = useStateContext();
 
   const [isLoading, setIsLoading] = useState(false);
   const [amount, setAmount] = useState('');
@@ -30,7 +30,9 @@ const ArtworkDetails = () => {
 
   const buyArt = async () => {
     setIsLoading(true);
-    await donate(state.pId, amount);
+    console.log(state.pId)
+    console.log(state.price)
+    await buy(state.pId, state.price);
     navigate('/')
     setIsLoading(false);
   }

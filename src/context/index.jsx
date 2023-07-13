@@ -59,11 +59,13 @@ export const StateContextProvider = ({ children }) => {
     return filteredArtworks;
   }
 
-  const donate = async (pId, amount) => {
-    const data = await contract.methods.donateToCampaign(pId, { value: ethers.utils.parseEther(amount)}).send({ from: address, gas: 1e7 });
-    console.log(data)
+  const buy = async (pId, amount) => {
+    const weiAmount = amount*1e18;
+    const data = await artwork_contract.methods.buyArtwork(pId).send({ value: weiAmount, from: address, gasLimit: 1e7 });
+    console.log(data);
     return data;
-  }
+}
+
 
   const getDonations = async (pId) => {
     const donations = await contract.methods.getDonators().call( [pId]);
@@ -130,7 +132,7 @@ export const StateContextProvider = ({ children }) => {
         createCampaign: publishCampaign,
         getArtworks,
         getUserCampaigns,
-        donate,
+        buy,
         getDonations,
         registerUser,
         getType,
