@@ -4,5 +4,6 @@ export { default as CustomButton } from './CustomButton';
 export { default as FormField } from './FormField';
 export { default as DisplayArtworks } from './DisplayArtworks';
 export { default as FundCard } from './FundCard';
+export { default as FundCard2 } from './FundCard2';
 export { default as CountBox } from './CountBox';
 export { default as Loader } from './Loader';

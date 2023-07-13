@@ -7,11 +7,11 @@ const Sold = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [campaigns, setCampaigns] = useState([]);
 
-  const { address, contract, getUserCampaigns } = useStateContext();
+  const { address, contract, getPurchasesSeller } = useStateContext();
 
   const fetchCampaigns = async () => {
     setIsLoading(true);
-    const data = await getUserCampaigns();
+    const data = await getPurchasesSeller();
     setCampaigns(data);
     setIsLoading(false);
   }

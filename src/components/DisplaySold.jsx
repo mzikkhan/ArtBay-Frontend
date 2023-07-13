@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import FundCard from './FundCard';
 import { loader } from '../assets';
+import FundCard2 from './FundCard2';
 
 const DisplaySold = ({ title, isLoading, campaigns }) => {
   const navigate = useNavigate();
@@ -13,15 +14,12 @@ const DisplaySold = ({ title, isLoading, campaigns }) => {
   }
 
 // Filter campaigns based on search term
-const filteredCampaigns = campaigns.filter((campaign) =>
-  campaign.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-  campaign.description.toLowerCase().includes(searchTerm.toLowerCase())
-);
+const filteredCampaigns = campaigns;
 
   
   return (
     <div>
-      <div className="flex flex-row max-w-[458px] py-2 pl-4 pr-2 h-[52px] bg-[#1c1c24] rounded-[100px]">
+      {/* <div className="flex flex-row max-w-[458px] py-2 pl-4 pr-2 h-[52px] bg-[#1c1c24] rounded-[100px]">
         <input
           type="text"
           placeholder="Search for artworks"
@@ -29,7 +27,7 @@ const filteredCampaigns = campaigns.filter((campaign) =>
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
-      </div>
+      </div> */}
       <br/>
       <h1 className="font-epilogue font-semibold text-[18px] text-white text-left">
         {title} ({filteredCampaigns.length})
@@ -47,7 +45,7 @@ const filteredCampaigns = campaigns.filter((campaign) =>
         {!isLoading &&
           filteredCampaigns.length > 0 &&
           filteredCampaigns.map((campaign) => (
-            <FundCard key={uuidv4()} {...campaign} handleClick={() => handleNavigate(campaign)} />
+            <FundCard2 key={uuidv4()} {...campaign} handleClick={() => handleNavigate(campaign)} />
           ))}
       </div>
     </div>

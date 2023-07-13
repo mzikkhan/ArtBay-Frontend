@@ -14,7 +14,7 @@ export const StateContextProvider = ({ children }) => {
   const web3 = new Web3(window.ethereum);
   const contract  = new web3.eth.Contract(crowdFundingAbi, "0xD215FA79247763E07ca7d170a3f623D02caAb1f3");
   const register_contract  = new web3.eth.Contract(registerAbi, "0x747f7994546FF4E8D043f5d8EB708Bb7986c3CCc");
-  const artwork_contract  = new web3.eth.Contract(artworkAbi, "0xE731AB16bB21CF636309dB262506fBD7b3363805");
+  const artwork_contract  = new web3.eth.Contract(artworkAbi, "0xC589a897238dC228369cB1390A5153B194887129");
 
   const address = useAddress();
   const connect = useMetamask();
@@ -59,9 +59,21 @@ export const StateContextProvider = ({ children }) => {
     return filteredArtworks;
   }
 
+  const getPurchasesBuyer = async () => {
+    const allPurchases = await artwork_contract.methods.getPurchases().call();
+    const filteredPurchases = allPurchases.filter((purchase) => purchase.buyer === address);
+    return filteredPurchases;
+  }
+
+  const getPurchasesSeller = async () => {
+    const allPurchases = await artwork_contract.methods.getPurchases().call();
+    const filteredPurchases = allPurchases.filter((purchase) => purchase.seller === address);
+    return filteredPurchases;
+  }
+
   const buy = async (pId, amount) => {
     const weiAmount = amount*1e18;
-    const data = await artwork_contract.methods.buyArtwork(pId).send({ value: weiAmount, from: address, gasLimit: 1e7 });
+    const data = await artwork_contract.methods.buyArtwork(pId).send({ value: weiAmount , from: address, gasLimit: 1e7 });
     console.log(data);
     return data;
 }
@@ -137,6 +149,8 @@ export const StateContextProvider = ({ children }) => {
         registerUser,
         getType,
         createArt,
+        getPurchasesBuyer,
+        getPurchasesSeller,
       }}
     >
       {children}
