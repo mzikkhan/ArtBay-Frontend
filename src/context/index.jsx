@@ -70,8 +70,16 @@ export const StateContextProvider = ({ children }) => {
     const allArtworks = await artwork_contract.methods.getArtworks().call();
 
     const filteredArtworks = allArtworks.filter((artwork) => artwork.owner === address);
-
-    return filteredArtworks;
+    const parsedArtworks = filteredArtworks.map((artwork, i) => ({
+      owner: artwork.owner,
+      credentials: artwork.credentials,
+      description: artwork.description,
+      price: ethers.utils.formatEther(artwork.price.toString()),
+      quantity: Number(artwork.quantity), 
+      image: artwork.image,
+      pId: i
+    }));
+    return parsedArtworks;
   }
 
   const getPurchasesBuyer = async () => {
@@ -100,6 +108,23 @@ export const StateContextProvider = ({ children }) => {
     return data;
   }
 
+  const updateQuantity = async (pId, quantity) => {
+    const data = await artwork_contract.methods.updateQuantity(pId, quantity).send({from: address, gasLimit: 1e7 });
+    console.log(data);
+    return data;
+  }
+
+  const startDelivery = async (pId) => {
+    const data = await artwork_contract.methods.startDelivery(pId).send({from: address, gasLimit: 1e7 });
+    console.log(data);
+    return data;
+  }
+
+  const completeDelivery = async (pId) => {
+    const data = await artwork_contract.methods.completeDelivery(pId).send({from: address, gasLimit: 1e7 });
+    console.log(data);
+    return data;
+  }
 
   const getDonations = async (pId) => {
     const donations = await contract.methods.getDonators().call( [pId]);
@@ -175,6 +200,9 @@ export const StateContextProvider = ({ children }) => {
         getPurchasesBuyer,
         getPurchasesSeller,
         getAuctionArtworks,
+        updateQuantity,
+        startDelivery,
+        completeDelivery,
       }}
     >
       {children}

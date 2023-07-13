@@ -6,12 +6,11 @@ import { thirdweb } from '../assets';
 
 const UploadedDetails = () => {
   const { state } = useLocation();
-  console.log(state.price)
   const navigate = useNavigate();
-  const { donate, getDonations, contract, address } = useStateContext();
+  const { updateQuantity, getDonations, contract, address } = useStateContext();
 
   const [isLoading, setIsLoading] = useState(false);
-  const [quantity, setQuantity] = useState(1);
+  const [quantity, setQuantity] = useState(Number(state.quantity));
 
   const fetchDonators = async () => {
     const data = await getDonations(state.pId);
@@ -23,10 +22,11 @@ const UploadedDetails = () => {
     if (contract) fetchDonators();
   }, [contract, address]);
 
-  const handleDonate = async () => {
+  const updateQ = async () => {
     setIsLoading(true);
-    await donate(state.pId, amount);
-
+    console.log(state.pId)
+    console.log(quantity)
+    await updateQuantity(state.pId+1, quantity);
     navigate('/');
     setIsLoading(false);
   };
@@ -56,8 +56,8 @@ const UploadedDetails = () => {
 
         {/* THIS PARTHAS BEEN HARD CODED - MUST CHANGE */}
         <div className="flex md:w-[150px] w-full flex-wrap justify-between gap-[30px]">
-          <CountBox title="Quantity Left" value={state.quantity} />
-          <CountBox title={"Price"} value={state.price} />
+          <CountBox title="Quantity Left" value={Number(state.quantity)} />
+          <CountBox title={"Price"} value={Number(state.price)} />
         </div>
       </div>
 
@@ -72,7 +72,7 @@ const UploadedDetails = () => {
               </div>
               <div>
                 <h4 className="font-epilogue font-semibold text-[14px] text-white break-all">Artist: {state.credentials}</h4>
-                {/* <p className="mt-[4px] font-epilogue font-normal text-[12px] text-[#808191]">Author Username</p> */}
+                <p className="mt-[4px] font-epilogue font-normal text-[12px] text-[#808191]">{Number(state.price)}</p>
               </div>
             </div>
           </div>
@@ -88,26 +88,30 @@ const UploadedDetails = () => {
           <div>
             <h4 className="font-epilogue font-semibold text-[18px] text-white uppercase">Change Quantity</h4>
             <div className="mt-[20px] flex items-center">
-              <button
-                className="quantity-btn"
-                onClick={handleDecreaseQuantity}
-              >
-                -
-              </button>
-              <div className="quantity-value">{quantity}</div>
-              <button
-                className="quantity-btn"
-                onClick={handleIncreaseQuantity}
-              >
-                +
-              </button>
-            </div>
+  <button
+    className="quantity-btn"
+    onClick={handleDecreaseQuantity}
+    style={{ color: 'white' }}
+  >
+    -
+  </button>
+  <div className="quantity-value" style={{ color: 'white' }}>
+    {quantity}
+  </div>
+  <button
+    className="quantity-btn"
+    onClick={handleIncreaseQuantity}
+    style={{ color: 'white' }}
+  >
+    +
+  </button>
+</div>
             <br/> 
             <CustomButton
               btnType="button"
               title="Save"
               styles="w-32 bg-[#8c6dfd]"
-              // handleClick={handleVerify}
+              handleClick={updateQ}
             />
           </div>
         </div>

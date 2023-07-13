@@ -66,41 +66,13 @@ const BoughtDetails = () => {
                             </div>
                             <div>
                                 <h4 className="font-epilogue font-semibold text-[14px] text-white break-all">{state.credentials}</h4>
-                                <p className="mt-[4px] font-epilogue font-normal text-[12px] text-[#808191]">{state.amount}</p>
+                                <p className="mt-[4px] font-epilogue font-normal text-[12px] text-[#808191]">ETH {Number(state.amount)}</p>
                             </div>
                         </div>
                     </div>
 
                     <div>
-                        <h4 className="font-epilogue font-semibold text-[18px] text-white uppercase">Delivery Phases</h4>
-                        {/* Four checkboxes for delivery phases */}
-                        <div className="flex flex-col gap-2 mt-2 font-epilogue font-normal text-[16px] text-[#808191] leading-[26px] space-between text-justify">
-                            <label>
-                                <input
-                                    type="checkbox"
-                                    checked={selectedPhases.includes('Dispatched')}
-                                    onChange={() => handlePhaseChange('Dispatched')}
-
-                                />
-                                Dispatched from the Warehouse
-                            </label>
-                            <label>
-                                <input
-                                    type="checkbox"
-                                    checked={selectedPhases.includes('DeliveryService')}
-                                    onChange={() => handlePhaseChange('DeliveryService')}
-                                />
-                                In Possession of the Delivery Service
-                            </label>
-                            <label>
-                                <input
-                                    type="checkbox"
-                                    checked={selectedPhases.includes('Delivered')}
-                                    onChange={() => handlePhaseChange('Delivered')}
-                                />
-                                Delivered
-                            </label>
-                        </div>
+                        <h4 className="font-epilogue font-semibold text-[18px] text-white uppercase">Delivery Status: {state.delivery_state}</h4>
                     </div>
                 </div>
             </div>
