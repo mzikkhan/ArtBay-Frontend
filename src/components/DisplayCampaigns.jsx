@@ -9,16 +9,16 @@ const DisplayCampaigns = ({ title, isLoading, campaigns }) => {
   const [searchTerm, setSearchTerm] = useState('');
 
   const handleNavigate = (campaign) => {
-    navigate(`/artwork-details/${campaign.title}`, { state: campaign })
+    navigate(`/artwork-sold-details/${campaign.title}`, { state: campaign })
   }
 
-// Filter campaigns based on search term
-const filteredCampaigns = campaigns.filter((campaign) =>
-  campaign.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-  campaign.description.toLowerCase().includes(searchTerm.toLowerCase())
-);
+  // Filter campaigns based on search term
+  const filteredCampaigns = campaigns.filter((campaign) =>
+    campaign.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    campaign.description.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
-  
+
   return (
     <div>
       <div className="flex flex-row max-w-[458px] py-2 pl-4 pr-2 h-[52px] bg-[#1c1c24] rounded-[100px]">
@@ -30,7 +30,7 @@ const filteredCampaigns = campaigns.filter((campaign) =>
           onChange={(e) => setSearchTerm(e.target.value)}
         />
       </div>
-      <br/>
+      <br />
       <h1 className="font-epilogue font-semibold text-[18px] text-white text-left">
         {title} ({filteredCampaigns.length})
       </h1>
@@ -40,7 +40,7 @@ const filteredCampaigns = campaigns.filter((campaign) =>
 
         {!isLoading && filteredCampaigns.length === 0 && (
           <p className="font-epilogue font-semibold text-[14px] leading-[30px] text-[#818183]">
-            No campaigns found.
+            No artworks found.
           </p>
         )}
 
