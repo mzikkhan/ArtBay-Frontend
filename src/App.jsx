@@ -2,9 +2,10 @@ import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 import { Sidebar, Navbar } from './components';
-import { Bought, ArtworkDetails, UploadArtwork, Home, Sold, AuctionDetails} from './pages';
+import { Bought, ArtworkDetails, UploadArtwork, Home, Sold, AuctionDetails, ArtworkSoldDetails} from './pages';
 import Uploaded from './pages/Uploaded';
 import AuctionPlace from './pages/AuctionPlace';
+import RegistrationForm from './pages/Register';
 
 const App = () => {
   return (
@@ -18,12 +19,14 @@ const App = () => {
 
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/register" element={<RegistrationForm />} />
           <Route path="/bought" element={<Bought />} />
           <Route path="/sold" element={<Sold />} />
           <Route path="/uploaded" element={<Uploaded />} />
           <Route path="/auction" element={<AuctionPlace />} />
           <Route path="/uploadArtwork" element={<UploadArtwork />} />
           <Route path="/artwork-details/:id" element={<ArtworkDetails />} />
+          <Route path="/sold-details/:id" element={<ArtworkSoldDetails />} />
           <Route path="/auction-details/:id" element={<AuctionDetails />} />
         </Routes>
       </div>

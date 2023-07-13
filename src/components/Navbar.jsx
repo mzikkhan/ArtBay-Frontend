@@ -20,6 +20,14 @@ const Navbar = () => {
       </div>
 
       <div className="sm:flex hidden flex-row justify-end gap-4">
+      <CustomButton 
+            btnType="button"
+            title="Register"
+            styles="bg-[#1dc071]"
+            handleClick={() => {
+              navigate('register');
+            }}
+          />
         {address && (
           <CustomButton 
             btnType="button"

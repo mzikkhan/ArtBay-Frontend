@@ -10,7 +10,7 @@ import { checkIfImage } from '../utils';
 const UploadArtwork = () => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
-  const { createCampaign } = useStateContext();
+  const { createArt } = useStateContext();
   const [form, setForm] = useState({
     artist_name: '',
     artist_username: '',
@@ -31,8 +31,7 @@ const UploadArtwork = () => {
     checkIfImage(form.image, async (exists) => {
       if (exists) {
         setIsLoading(true)
-        await createCampaign({ ...form, target: ethers.utils.parseUnits(form.target, 18) })
-        // await createCampaign({ ...form})
+        await createArt({ ...form, target: ethers.utils.parseUnits(form.target, 18) })
         setIsLoading(false);
         navigate('/');
       } else {
