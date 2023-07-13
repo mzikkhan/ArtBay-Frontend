@@ -7,6 +7,7 @@ import Web3 from "web3";
 import crowdFundingAbi from "../abis/CrowdFunding.json";
 import registerAbi from "../abis/Register.json";
 import artworkAbi from "../abis/Artwork.json";
+import certificateAbi from "../abis/ArtworkCollectible.json";
 const StateContext = createContext();
 
 export const StateContextProvider = ({ children }) => {
@@ -14,7 +15,8 @@ export const StateContextProvider = ({ children }) => {
   const web3 = new Web3(window.ethereum);
   const contract  = new web3.eth.Contract(crowdFundingAbi, "0xD215FA79247763E07ca7d170a3f623D02caAb1f3");
   const register_contract  = new web3.eth.Contract(registerAbi, "0x747f7994546FF4E8D043f5d8EB708Bb7986c3CCc");
-  const artwork_contract  = new web3.eth.Contract(artworkAbi, "0x9c06007f678D2A03B4B1d5f7c761d8E59b16d5F3");
+  const artwork_contract  = new web3.eth.Contract(artworkAbi, "0x40b26bAD8E72c89833fA45653A1f5277fAfCa251");
+  const certficate_contract  = new web3.eth.Contract(certificateAbi, "0x1dbbA8D3164e7AA5E1B01f04eE0e7bF0D25f3B75");
 
   const address = useAddress();
   const connect = useMetamask();
@@ -182,6 +184,14 @@ export const StateContextProvider = ({ children }) => {
     }
   }
 
+  const issueCertificates = async (pId) => {
+    console.group(address)
+    console.log(pId)
+    const data = await artwork_contract.methods.issueCertificate(pId).send({from: address, gasLimit: 1e7 });
+    console.log(data);
+    return data;
+  }
+
   return (
     <StateContext.Provider
       value={{ 
@@ -203,6 +213,7 @@ export const StateContextProvider = ({ children }) => {
         updateQuantity,
         startDelivery,
         completeDelivery,
+        issueCertificates,
       }}
     >
       {children}

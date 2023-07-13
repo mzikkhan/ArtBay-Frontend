@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 import { Sidebar, Navbar } from './components';
-import { Bought, ArtworkDetails, UploadArtwork, Home, Sold, AuctionDetails, ArtworkSoldDetails, UploadedDetails} from './pages';
+import { Bought, ArtworkDetails, UploadArtwork, Home, Sold, AuctionDetails, ArtworkSoldDetails, UploadedDetails, Verify} from './pages';
 import Uploaded from './pages/Uploaded';
 import AuctionPlace from './pages/AuctionPlace';
 import RegistrationForm from './pages/Register';
@@ -24,6 +24,7 @@ const App = () => {
           <Route path="/bought" element={<Bought />} />
           <Route path="/sold" element={<Sold />} />
           <Route path="/uploaded" element={<Uploaded />} />
+          <Route path="/verify" element={<Verify />} />
           <Route path="/auction" element={<AuctionPlace />} />
           <Route path="/uploadArtwork" element={<UploadArtwork />} />
           <Route path="/artwork-details/:id" element={<ArtworkDetails />} />

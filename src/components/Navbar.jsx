@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useStateContext } from '../context';
 import { CustomButton } from './';
@@ -8,10 +8,18 @@ import { navlinks } from '../constants';
 const Navbar = () => {
   const navigate = useNavigate();
   const [isActive, setIsActive] = useState('dashboard');
+  const [userType, setUserType] = useState(localStorage.getItem('userType') || ''); // Retrieve userType from localStorage or set an initial empty string
   const [toggleDrawer, setToggleDrawer] = useState(false);
-  const { connect, address } = useStateContext();
+  const { connect, address, getType } = useStateContext();
 
   const pageTitle = "Artbay"; // Set the title of the webpage
+
+  const handleConnect = async () => {
+    connect
+    const res = await getType();
+    setUserType(res[1]);
+    localStorage.setItem('userType', res[1]); // Store the userType in localStorage
+  };
 
   return (
     <div className="flex md:flex-row flex-col-reverse justify-between mb-[35px] gap-6">
@@ -20,20 +28,20 @@ const Navbar = () => {
       </div>
 
       <div className="sm:flex hidden flex-row justify-end gap-4">
-      <CustomButton 
+      {userType!="Artist" && userType!="Verifier" && <CustomButton 
             btnType="button"
             title="Register"
             styles="bg-[#1dc071]"
             handleClick={() => {
               navigate('register');
             }}
-          />
+          />}
         {address && (
           <CustomButton 
             btnType="button"
             title="Wallet Connected"
             styles="bg-[#1dc071]"
-            handleClick
+            // handleClick={handleConnect}
           />
         )}
         
@@ -45,15 +53,9 @@ const Navbar = () => {
             handleClick={connect}
           />
         )}
-
-        {/* <Link to="/profile">
-          <div className="w-[52px] h-[52px] rounded-full bg-[#2c2f32] flex justify-center items-center cursor-pointer">
-            <img src='./src/triskelion.svg' alt="user" className="w-[60%] h-[60%] object-contain" />
-          </div>
-        </Link> */}
       </div>
 
-      {/* Small screen navigation
+      {/* Small screen navigation */}
       <div className="sm:hidden flex justify-between items-center relative">
         <div className="w-[40px] h-[40px] rounded-[10px] bg-[#2c2f32] flex justify-center items-center cursor-pointer">
           <img src={logo} alt="user" className="w-[60%] h-[60%] object-contain" />
@@ -102,7 +104,7 @@ const Navbar = () => {
             />
           </div>
         </div>
-      </div>*/}
+      </div>
     </div> 
   );
 };
