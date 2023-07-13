@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react'
 import { DisplayCampaigns } from '../components';
 import { useStateContext } from '../context'
 
-const Profile = () => {
+const AuctionPlace = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [campaigns, setCampaigns] = useState([]);
 
@@ -22,11 +22,11 @@ const Profile = () => {
 
   return (
     <DisplayCampaigns 
-      title="All Campaigns"
+      title="Auction"
       isLoading={isLoading}
       campaigns={campaigns}
     />
   )
 }
 
-export default Profile
+export default AuctionPlace

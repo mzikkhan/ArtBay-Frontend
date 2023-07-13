@@ -2,7 +2,9 @@ import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 import { Sidebar, Navbar } from './components';
-import { CampaignDetails, CreateCampaign, Home, Profile } from './pages';
+import { Bought, CampaignDetails, UploadArtwork, Home, Sold} from './pages';
+import Uploaded from './pages/Uploaded';
+import AuctionPlace from './pages/AuctionPlace';
 
 const App = () => {
   return (
@@ -16,8 +18,11 @@ const App = () => {
 
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/create-campaign" element={<CreateCampaign />} />
+          <Route path="/bought" element={<Bought />} />
+          <Route path="/sold" element={<Sold />} />
+          <Route path="/uploaded" element={<Uploaded />} />
+          <Route path="/auction" element={<AuctionPlace />} />
+          <Route path="/uploadArtwork" element={<UploadArtwork />} />
           <Route path="/campaign-details/:id" element={<CampaignDetails />} />
         </Routes>
       </div>

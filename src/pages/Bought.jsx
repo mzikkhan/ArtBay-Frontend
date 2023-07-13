@@ -3,15 +3,15 @@ import React, { useState, useEffect } from 'react'
 import { DisplayCampaigns } from '../components';
 import { useStateContext } from '../context'
 
-const Home = () => {
+const Bought = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [campaigns, setCampaigns] = useState([]);
 
-  const { address, contract, getCampaigns } = useStateContext();
+  const { address, contract, getUserCampaigns } = useStateContext();
 
   const fetchCampaigns = async () => {
     setIsLoading(true);
-    const data = await getCampaigns();
+    const data = await getUserCampaigns();
     setCampaigns(data);
     setIsLoading(false);
   }
@@ -22,11 +22,11 @@ const Home = () => {
 
   return (
     <DisplayCampaigns 
-      title="All Artworks"
+      title="Artworks Bought"
       isLoading={isLoading}
       campaigns={campaigns}
     />
   )
 }
 
-export default Home
+export default Bought
