@@ -14,7 +14,7 @@ export const StateContextProvider = ({ children }) => {
   const web3 = new Web3(window.ethereum);
   const contract  = new web3.eth.Contract(crowdFundingAbi, "0xD215FA79247763E07ca7d170a3f623D02caAb1f3");
   const register_contract  = new web3.eth.Contract(registerAbi, "0x747f7994546FF4E8D043f5d8EB708Bb7986c3CCc");
-  const artwork_contract  = new web3.eth.Contract(artworkAbi, "0xC589a897238dC228369cB1390A5153B194887129");
+  const artwork_contract  = new web3.eth.Contract(artworkAbi, "0x9c06007f678D2A03B4B1d5f7c761d8E59b16d5F3");
 
   const address = useAddress();
   const connect = useMetamask();
@@ -51,6 +51,21 @@ export const StateContextProvider = ({ children }) => {
     return parsedArtworks;
   }
 
+  const getAuctionArtworks = async () => {
+    const artworks = await artwork_contract.methods.getAuctionArtworks().call();
+    const parsedArtworks = artworks.map((artwork, i) => ({
+      owner: artwork.owner,
+      credentials: artwork.credentials,
+      description: artwork.description,
+      bid: ethers.utils.formatEther(artwork.bid.toString()),
+      deadline: Number(artwork.deadline), 
+      image: artwork.image,
+      pId: i
+    }));
+
+    return parsedArtworks;
+  }
+
   const getUserCampaigns = async () => {
     const allArtworks = await artwork_contract.methods.getArtworks().call();
 
@@ -76,7 +91,14 @@ export const StateContextProvider = ({ children }) => {
     const data = await artwork_contract.methods.buyArtwork(pId).send({ value: weiAmount , from: address, gasLimit: 1e7 });
     console.log(data);
     return data;
-}
+  }
+
+  const bid = async (pId, amount) => {
+    const weiAmount = amount*1e18;
+    const data = await artwork_contract.methods.updateBid(pId, weiAmount).send({from: address, gasLimit: 1e7 });
+    console.log(data);
+    return data;
+  }
 
 
   const getDonations = async (pId) => {
@@ -145,12 +167,14 @@ export const StateContextProvider = ({ children }) => {
         getArtworks,
         getUserCampaigns,
         buy,
+        bid,
         getDonations,
         registerUser,
         getType,
         createArt,
         getPurchasesBuyer,
         getPurchasesSeller,
+        getAuctionArtworks,
       }}
     >
       {children}

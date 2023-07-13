@@ -19,15 +19,6 @@ const filteredCampaigns = campaigns;
   
   return (
     <div>
-      {/* <div className="flex flex-row max-w-[458px] py-2 pl-4 pr-2 h-[52px] bg-[#1c1c24] rounded-[100px]">
-        <input
-          type="text"
-          placeholder="Search for artworks"
-          className="flex w-full font-epilogue font-normal text-[14px] placeholder:text-[#4b5264] text-white bg-transparent outline-none"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
-      </div> */}
       <br/>
       <h1 className="font-epilogue font-semibold text-[18px] text-white text-left">
         {title} ({filteredCampaigns.length})

@@ -14,7 +14,7 @@ const DisplayAuction = ({ title, isLoading, campaigns }) => {
 
 // Filter campaigns based on search term
 const filteredCampaigns = campaigns.filter((campaign) =>
-  campaign.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+  campaign.credentials.toLowerCase().includes(searchTerm.toLowerCase()) ||
   campaign.description.toLowerCase().includes(searchTerm.toLowerCase())
 );
 

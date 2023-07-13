@@ -10,7 +10,7 @@ import { thirdweb } from '../assets';
 const AuctionDetails = () => {
     const { state } = useLocation();
     const navigate = useNavigate();
-    const { donate, getDonations, contract, address } = useStateContext();
+    const { bid, getDonations, contract, address } = useStateContext();
 
     const [isLoading, setIsLoading] = useState(false);
     const [amount, setAmount] = useState('');
@@ -29,11 +29,10 @@ const AuctionDetails = () => {
         if (contract) fetchAuctioneers();
     }, [contract, address])
 
-    const handleDonate = async () => {
+    const handleBid = async () => {
         setIsLoading(true);
-        await donate(state.pId, amount);
-
-        navigate('/')
+        await bid(state.pId, state.bid*2);
+        navigate('/auction')
         setIsLoading(false);
     }
 
@@ -49,8 +48,8 @@ const AuctionDetails = () => {
 
 
                 <div className="flex md:w-[150px] w-full flex-wrap justify-between gap-[30px]">
-                    <CountBox title="Price Raised" value={"Eth 0.5"} />
-                    <CountBox title="Quantity Left" value={1} />
+                    <CountBox title="Highest Bid" value={state.bid} />
+                    <CountBox title="Quantity" value={1} />
                     <CountBox title="Days Left" value={remainingDays} />
                 </div>
             </div>
@@ -58,61 +57,28 @@ const AuctionDetails = () => {
             <div className="mt-[60px] flex lg:flex-row flex-col gap-5">
                 <div className="flex-[2] flex flex-col gap-[40px]">
                     <div>
-                        <h4 className="font-epilogue font-semibold text-[18px] text-white uppercase">The Art Title</h4>
+                        <h4 className="font-epilogue font-semibold text-[18px] text-white uppercase">Title: {state.description}</h4>
 
                         <div className="mt-[20px] flex flex-row items-center flex-wrap gap-[14px]">
                             <div className="w-[52px] h-[52px] flex items-center justify-center rounded-full bg-[#2c2f32] cursor-pointer">
                                 <img src={thirdweb} alt="user" className="w-[60%] h-[60%] object-contain" />
                             </div>
                             <div>
-                                <h4 className="font-epilogue font-semibold text-[14px] text-white break-all">AuthorName</h4>
-                                <p className="mt-[4px] font-epilogue font-normal text-[12px] text-[#808191]">Author Username</p>
+                                <h4 className="font-epilogue font-semibold text-[14px] text-white break-all">Artist: {state.credentials}</h4>
                             </div>
-                        </div>
-                    </div>
-
-                    <div>
-                        <h4 className="font-epilogue font-semibold text-[18px] text-white uppercase">Description</h4>
-
-                        <div className="mt-[20px]">
-                            <p className="font-epilogue font-normal text-[16px] text-[#808191] leading-[26px] text-justify">{state.description}</p>
-                        </div>
-                    </div>
-
-                    <div>
-                        <h4 className="font-epilogue font-semibold text-[18px] text-white uppercase">Auctioneers</h4>
-
-                        <div className="mt-[20px] flex flex-col gap-4">
-                            {auctioneers.length > 0 ? auctioneers.map((item, index) => (
-                                <div key={`${item.auctioneers}-${index}`} className="flex justify-between items-center gap-4">
-                                    <p className="font-epilogue font-normal text-[16px] text-[#b2b3bd] leading-[26px] break-ll">{index + 1}. {item.donator}</p>
-                                    <p className="font-epilogue font-normal text-[16px] text-[#808191] leading-[26px] break-ll">{item.donation}</p>
-                                </div>
-                            )) : (
-                                <p className="font-epilogue font-normal text-[16px] text-[#808191] leading-[26px] text-justify">No auctioneers yet. Be the first one!</p>
-                            )}
                         </div>
                     </div>
                 </div>
 
                 <div className="flex-1">
-                    <h4 className="font-epilogue font-semibold text-[18px] text-white uppercase">Bid Now</h4>
-
                     <div className="mt-[20px] flex flex-col p-4 bg-[#1c1c24] rounded-[10px]">
                         <p className="font-epilogue fount-medium text-[20px] leading-[30px] text-center text-[#808191]">
                             Make Bid
                         </p>
                         <div className="mt-[30px]">
-                            <input
-                                type="number"
-                                placeholder="ETH 0.5"
-                                step="0.01"
-                                className="w-full py-[10px] sm:px-[20px] px-[15px] outline-none border-[1px] border-[#3a3a43] bg-transparent font-epilogue text-white text-[18px] leading-[30px] placeholder:text-[#4b5264] rounded-[10px]"
-                                value={amount}
-                                onChange={(e) => setAmount(e.target.value)}
-                            />
-
-
+                            <div className="my-[20px] p-4 bg-[#13131a] rounded-[10px]">
+                                <h4 className="font-epilogue font-semibold text-[14px] leading-[22px] text-white">ETH {state.bid*2}</h4>
+                            </div>
                             <div className="my-[20px] p-4 bg-[#13131a] rounded-[10px]">
                                 <h4 className="font-epilogue font-semibold text-[14px] leading-[22px] text-white">Love the artwork?</h4>
                                 <p className="mt-[20px] font-epilogue font-normal leading-[22px] text-[#808191]">Make a bid, now! Before it runs out!!.</p>
@@ -122,7 +88,7 @@ const AuctionDetails = () => {
                                 btnType="button"
                                 title="Bid"
                                 styles="w-full bg-[#8c6dfd]"
-                                handleClick={handleDonate}
+                                handleClick={handleBid}
                             />
                         </div>
                     </div>

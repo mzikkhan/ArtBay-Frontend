@@ -102,6 +102,13 @@ const UploadedDetails = () => {
                 +
               </button>
             </div>
+            <br/> 
+            <CustomButton
+              btnType="button"
+              title="Save"
+              styles="w-32 bg-[#8c6dfd]"
+              // handleClick={handleVerify}
+            />
           </div>
         </div>
       </div>

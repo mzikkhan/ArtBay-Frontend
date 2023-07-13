@@ -7,11 +7,11 @@ const AuctionPlace = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [campaigns, setCampaigns] = useState([]);
 
-  const { address, contract, getUserCampaigns } = useStateContext();
+  const { address, contract, getAuctionArtworks } = useStateContext();
 
   const fetchCampaigns = async () => {
     setIsLoading(true);
-    const data = await getUserCampaigns();
+    const data = await getAuctionArtworks();
     setCampaigns(data);
     setIsLoading(false);
   }
