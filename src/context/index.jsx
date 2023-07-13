@@ -14,7 +14,7 @@ export const StateContextProvider = ({ children }) => {
   const web3 = new Web3(window.ethereum);
   const contract  = new web3.eth.Contract(crowdFundingAbi, "0xD215FA79247763E07ca7d170a3f623D02caAb1f3");
   const register_contract  = new web3.eth.Contract(registerAbi, "0x747f7994546FF4E8D043f5d8EB708Bb7986c3CCc");
-  const artwork_contract  = new web3.eth.Contract(artworkAbi, "0xD75F472e4Bb793EA5495A677C6E1138889D0D4FF");
+  const artwork_contract  = new web3.eth.Contract(artworkAbi, "0xE731AB16bB21CF636309dB262506fBD7b3363805");
 
   const address = useAddress();
   const connect = useMetamask();
@@ -36,28 +36,27 @@ export const StateContextProvider = ({ children }) => {
     }
   }
 
-  const getCampaigns = async () => {
-    const campaigns = await contract.methods.getCampaigns().call();
-    const parsedCampaings = campaigns.map((campaign, i) => ({
-      owner: campaign.owner,
-      title: campaign.title,
-      description: campaign.description,
-      target: ethers.utils.formatEther(campaign.target.toString()),
-      deadline: Number(campaign.deadline), 
-      amountCollected: ethers.utils.formatEther(campaign.amountCollected.toString()),
-      image: campaign.image,
+  const getArtworks = async () => {
+    const artworks = await artwork_contract.methods.getArtworks().call();
+    const parsedArtworks = artworks.map((artwork, i) => ({
+      owner: artwork.owner,
+      credentials: artwork.credentials,
+      description: artwork.description,
+      price: ethers.utils.formatEther(artwork.price.toString()),
+      quantity: Number(artwork.quantity), 
+      image: artwork.image,
       pId: i
     }));
 
-    return parsedCampaings;
+    return parsedArtworks;
   }
 
   const getUserCampaigns = async () => {
-    const allCampaigns = await getCampaigns();
+    const allArtworks = await artwork_contract.methods.getArtworks().call();
 
-    const filteredCampaigns = allCampaigns.filter((campaign) => campaign.owner === address);
+    const filteredArtworks = allArtworks.filter((artwork) => artwork.owner === address);
 
-    return filteredCampaigns;
+    return filteredArtworks;
   }
 
   const donate = async (pId, amount) => {
@@ -111,7 +110,7 @@ export const StateContextProvider = ({ children }) => {
         form.price,
         form.artist_username,
         form.quantity
-        ).send({ from: address, gas: 1e7 });
+        ).send({ from: address, gas: 25000000 });
     
       console.log("contract call success", data);
     }
@@ -129,7 +128,7 @@ export const StateContextProvider = ({ children }) => {
         contract,
         connect,
         createCampaign: publishCampaign,
-        getCampaigns,
+        getArtworks,
         getUserCampaigns,
         donate,
         getDonations,

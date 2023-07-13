@@ -4,17 +4,17 @@ import { v4 as uuidv4 } from 'uuid';
 import FundCard from './FundCard';
 import { loader } from '../assets';
 
-const DisplayCampaigns = ({ title, isLoading, campaigns }) => {
+const DisplayUploaded = ({ title, isLoading, campaigns }) => {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState('');
 
   const handleNavigate = (campaign) => {
-    navigate(`/artwork-details/${campaign.title}`, { state: campaign })
+    navigate(`/uploaded-details/${campaign.title}`, { state: campaign })
   }
 
 // Filter campaigns based on search term
 const filteredCampaigns = campaigns.filter((campaign) =>
-  campaign.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+  campaign.credentials.toLowerCase().includes(searchTerm.toLowerCase()) ||
   campaign.description.toLowerCase().includes(searchTerm.toLowerCase())
 );
 
@@ -54,4 +54,4 @@ const filteredCampaigns = campaigns.filter((campaign) =>
   )
 }
 
-export default DisplayCampaigns
+export default DisplayUploaded
