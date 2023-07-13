@@ -135,7 +135,7 @@ export const StateContextProvider = ({ children }) => {
         getDonations,
         registerUser,
         getType,
-        // createArt,
+        createArt,
       }}
     >
       {children}

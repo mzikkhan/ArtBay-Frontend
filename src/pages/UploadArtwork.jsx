@@ -16,8 +16,8 @@ const UploadArtwork = () => {
     artist_username: '',
     title: '',
     description: '',
-    price: '',
-    quantity: '',
+    price: 0,
+    quantity: 0,
     image: '',
   });
 
@@ -31,7 +31,8 @@ const UploadArtwork = () => {
     checkIfImage(form.image, async (exists) => {
       if (exists) {
         setIsLoading(true)
-        await createArt({ ...form, target: ethers.utils.parseUnits(form.target, 18) })
+        console.log(form)
+        await createArt({ ...form, target: ethers.utils.parseUnits(form.price, 18) })
         setIsLoading(false);
         navigate('/');
       } else {
@@ -77,6 +78,7 @@ const UploadArtwork = () => {
           labelName="Description"
           placeholder="Describe your Artwork"
           isTextArea
+          inputType="text"
           value={form.description}
           handleChange={(e) => handleFormFieldChange('description', e)}
         />
@@ -90,7 +92,7 @@ const UploadArtwork = () => {
           <FormField
             labelName="Price *"
             placeholder="ETH 0.50"
-            inputType="text"
+            inputType="number"
             value={form.price}
             handleChange={(e) => handleFormFieldChange('price', e)}
           />
@@ -106,7 +108,7 @@ const UploadArtwork = () => {
         <FormField
           labelName="Artwork image *"
           placeholder="Place image URL of your artwork"
-          inputType="url"
+          inputType="text"
           value={form.image}
           handleChange={(e) => handleFormFieldChange('image', e)}
         />

@@ -6,6 +6,7 @@ import { Bought, ArtworkDetails, UploadArtwork, Home, Sold, AuctionDetails, Artw
 import Uploaded from './pages/Uploaded';
 import AuctionPlace from './pages/AuctionPlace';
 import RegistrationForm from './pages/Register';
+import BoughtDetails from './pages/BoughtDetails';
 
 const App = () => {
   return (
@@ -27,6 +28,7 @@ const App = () => {
           <Route path="/uploadArtwork" element={<UploadArtwork />} />
           <Route path="/artwork-details/:id" element={<ArtworkDetails />} />
           <Route path="/sold-details/:id" element={<ArtworkSoldDetails />} />
+          <Route path="/bought-details/:id" element={<BoughtDetails />} />
           <Route path="/auction-details/:id" element={<AuctionDetails />} />
         </Routes>
       </div>
