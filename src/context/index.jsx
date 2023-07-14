@@ -8,6 +8,7 @@ import crowdFundingAbi from "../abis/CrowdFunding.json";
 import registerAbi from "../abis/Register.json";
 import artworkAbi from "../abis/Artwork.json";
 import certificateAbi from "../abis/ArtworkCollectible.json";
+import { artworkContractAddress } from './constants';
 const StateContext = createContext();
 
 export const StateContextProvider = ({ children }) => {
@@ -15,7 +16,7 @@ export const StateContextProvider = ({ children }) => {
   const web3 = new Web3(window.ethereum);
   const contract  = new web3.eth.Contract(crowdFundingAbi, "0xD215FA79247763E07ca7d170a3f623D02caAb1f3");
   const register_contract  = new web3.eth.Contract(registerAbi, "0x747f7994546FF4E8D043f5d8EB708Bb7986c3CCc");
-  const artwork_contract  = new web3.eth.Contract(artworkAbi, "0x40b26bAD8E72c89833fA45653A1f5277fAfCa251");
+  const artwork_contract  = new web3.eth.Contract(artworkAbi, artworkContractAddress);
   const certficate_contract  = new web3.eth.Contract(certificateAbi, "0x1dbbA8D3164e7AA5E1B01f04eE0e7bF0D25f3B75");
 
   const address = useAddress();
@@ -99,7 +100,7 @@ export const StateContextProvider = ({ children }) => {
   }
 
   const buy = async (pId, amount) => {
-    const weiAmount = amount*1e18;
+    const weiAmount = (amount*1e18 * 10) / 100;
     const data = await artwork_contract.methods.buyArtwork(pId).send({ value: weiAmount , from: address, gasLimit: 1e7 });
     console.log(data);
     return data;
