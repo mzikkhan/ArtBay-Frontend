@@ -6,7 +6,7 @@ import { thirdweb } from '../assets';
 
 const ArtworkDetails = () => {
   const { state } = useLocation();
-  console.log(state.owner)
+  console.log(state.isVerified)
   const navigate = useNavigate();
   const { buy, getDonations, contract, address } = useStateContext();
   const [isLoading, setIsLoading] = useState(false);
@@ -80,7 +80,7 @@ const ArtworkDetails = () => {
               </div>
             </div>
           </div>
-          {userType=="Verifier" && <div>
+          {userType=="Verifier" && !state.isVerified && <div>
             <h4 className="font-epilogue font-semibold text-[18px] text-white uppercase">Verify Artwork</h4>
             <br />
             <CustomButton
@@ -90,7 +90,7 @@ const ArtworkDetails = () => {
               handleClick={handleVerify}
             />
           </div>}
-          {userType!="Verifier" && <div>
+          <div>
             <h4 className="font-epilogue font-semibold text-[18px] text-white uppercase">Authenticity Certificate:</h4>
             <br />
             {state.isVerified && <CustomButton
@@ -98,9 +98,9 @@ const ArtworkDetails = () => {
               title="Check Certificate"
               styles="w-32 bg-[#8c6dfd]"
               handleClick={handleJson}
-            /> }
+            />}
             {!state.isVerified && <h4 className="font-epilogue font-semibold text-[14px] text-white break-all">No authenticity certificate.</h4>}
-          </div>}
+          </div>
         </div>
 
         <div className="flex-1">

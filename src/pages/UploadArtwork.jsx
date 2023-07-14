@@ -10,7 +10,7 @@ import { checkIfImage } from '../utils';
 const UploadArtwork = () => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
-  const { createArt } = useStateContext();
+  const { createArt, createAuctionArt } = useStateContext();
   const [form, setForm] = useState({
     artist_name: '',
     artist_username: '',
@@ -33,6 +33,23 @@ const UploadArtwork = () => {
         setIsLoading(true)
         console.log(form)
         await createArt({ ...form, target: ethers.utils.parseUnits(form.price, 18) })
+        setIsLoading(false);
+        navigate('/');
+      } else {
+        alert('Provide valid image URL')
+        setForm({ ...form, image: '' });
+      }
+    })
+  }
+
+  const handleSubmit2 = async (e) => {
+    e.preventDefault();
+
+    checkIfImage(form.image, async (exists) => {
+      if (exists) {
+        setIsLoading(true)
+        console.log(form)
+        await createAuctionArt({ ...form })
         setIsLoading(false);
         navigate('/');
       } else {
@@ -117,12 +134,14 @@ const UploadArtwork = () => {
           <CustomButton
             btnType="submit"
             title="Submit to Marketplace"
-            styles="bg-[#1dc071] mr-2" // Add margin-right for spacing
+            styles="bg-[#1dc071] mr-2"
+            onSubmit={handleSubmit}
           />
           <CustomButton
             btnType="submit"
             title="Submit for Auction"
-            styles="bg-[#1dc071] ml-2" // Add margin-left for spacing
+            styles="bg-[#1dc071] ml-2"
+            onSubmit={handleSubmit2}
           />
         </div>
       </form>

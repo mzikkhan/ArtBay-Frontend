@@ -47,6 +47,8 @@ export const StateContextProvider = ({ children }) => {
       price: ethers.utils.formatEther(artwork.price.toString()),
       quantity: Number(artwork.quantity), 
       image: artwork.image,
+      isVerified: artwork.isVerified,
+      tokenUri: artwork.tokenUri,
       pId: i
     }));
 
@@ -177,7 +179,25 @@ export const StateContextProvider = ({ children }) => {
     
       console.log("contract call success", data);
     }
+    catch(error) {
+      console.log(error);
+      console.log("didnt work yo")
+    }
+  }
 
+  // Create Artwork
+  const createAuctionArt = async (form) => {
+    try{
+      const data = await artwork_contract.methods.createAuctionArt(
+        address,
+        form.image,
+        form.description,
+        form.price,
+        form.artist_username,
+        10102023
+        ).send({ from: address, gas: 25000000 });
+      console.log("contract call success", data);
+    }
     catch(error) {
       console.log(error);
       console.log("didnt work yo")
@@ -187,6 +207,7 @@ export const StateContextProvider = ({ children }) => {
   const issueCertificates = async (pId) => {
     console.group(address)
     console.log(pId)
+    console.log('hahhaha')
     const data = await artwork_contract.methods.issueCertificate(pId).send({from: address, gasLimit: 1e7 });
     console.log(data);
     return data;
@@ -214,6 +235,7 @@ export const StateContextProvider = ({ children }) => {
         startDelivery,
         completeDelivery,
         issueCertificates,
+        createAuctionArt,
       }}
     >
       {children}

@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { CountBox, CustomButton, Loader } from '../components';
 import { useStateContext } from '../context';
 const VerifyPage = () => {
+  const navigate = useNavigate();
   const { state } = useLocation();
   const owner = state?.owner || '';
   const pId = state?.pId || '';
@@ -18,7 +20,7 @@ const VerifyPage = () => {
     try {
       const uri = 'https://bafybeiej6epn6i2up5bfmjiil7h5glpeapnclgees5zb6hsokdmyjy2s7y.ipfs.dweb.link/artwork%20%281%29.json';
       await issueCertificates(Number(pId))
-      Navigate('/')
+      navigate('/')
     } catch (error) {
       console.error('Error uploading file to IPFS:', error);
     }
