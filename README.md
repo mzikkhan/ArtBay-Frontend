@@ -1,6 +1,5 @@
-## To use this:
+# ArtBay Frontend
 
-1. pull the code
-2. run 'npm i'
-3. sign into metamask wallet
-4. run 'npm run dev'
+ArtBay is a decentralized marketplace where you can buy, sell, and verify artworks as NFTs (Non-Fungible Tokens) using the Ethereum blockchain. This repository contains the frontend infrastructure that powers the ArtBay platform.
+
+Developed for: BUET CSE FEST 2023 - Hackathon ( Blockchain Category )
